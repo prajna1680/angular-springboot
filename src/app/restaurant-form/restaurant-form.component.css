@@ -1,0 +1,14 @@
+.mat-toolbar-row {
+    height: 64px;
+    background-color: cadetblue;
+    border-radius: 20px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+.mat-toolbar {
+    background-color: darkgray;
+    width: 100%;
+    color: white
+}
+

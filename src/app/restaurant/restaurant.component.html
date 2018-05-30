@@ -1,0 +1,230 @@
+<div class="container mat-elevation-z8" fxFlex class="contentResp"> 
+  <br>
+    <mat-toolbar>
+        <!-- <span>Restaurants</span> -->
+        <div id="search-component">
+            <input type="text" placeholder="search" aria-label="Number" matInput [formControl]="searchTerm" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let s of searchResult" [value]="item">
+                    <a routerLink="/search/{{s.name}}">{{ s.name }}</a>
+                </mat-option>
+                <mat-option *ngIf="s == 0">
+                  <hr>
+                  <p>
+                    No results found 
+                  </p>
+                </mat-option>
+              </mat-autocomplete>
+        </div>
+    </mat-toolbar>
+
+
+        <!-- <input type="text" [formControl]="searchdata">
+        <div *ngFor="let item of results" [value]="item">
+          {{ item.name }}
+          </div> -->
+        <!-- <input type="text"  (input)="onSearchChange($event.target.value)"> -->
+              
+        <!-- <input id="typeahead-basic" type="text" class="form-control"  [(ngModel)]="model" [ngbTypeahead]="search"/> -->
+
+ <!-- <input id="typeahead-format" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" [resultFormatter]="formatter" />  -->
+
+     
+  <hr>
+  <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          New Restaurant
+        </mat-panel-title>
+        <mat-panel-description>
+          Input Restaurant Details
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
+      <mat-form-field>
+        <input matInput id="id" [(ngModel)]="id" placeholder="Restaurant Id">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="name" placeholder="Restaurant Name">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput [(ngModel)]="location" placeholder="Restaurant Location">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="cuisine" placeholder="Restaurant Cuisine">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput [(ngModel)]="rating" placeholder="Restaurant Rating">
+      </mat-form-field>
+      <button mat-raised-button type="submit" (click)="addRestaurant()" class="btn btn-primary">Submit</button>
+    </mat-expansion-panel>
+    <hr> 
+      
+
+  <mat-grid-list cols="2" rowHeight="300px">
+     <mat-grid-tile *ngFor="let rest of restaurants" [colspan]="1" [rowspan]="2">
+  
+ <mat-card class="example-card">
+      <mat-card-header >
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{rest.name}}</mat-card-title>
+        <mat-card-subtitle>Located at {{rest.location}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://www.shgeneva.com/wp-content/uploads/2016/01/mip-cicg-geneva-starling-hotel-aeroport-meal-lunch.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>ID : {{rest.id}} </p>
+        <p>Cuisine available {{rest.cuisine}}</p>
+        <p>User rating : {{rest.rating}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button  class="btn btn-primary" (click)="updateRestaurant(rest)">Edit</button>
+          <button  class="btn btn-danger" (click)="deleteRestaurant(rest.id)">Delete</button>
+          <!-- <button mat-raised-button class="btn btn-primary" (click)="addFavt(rest)">Add to Favourities</button> -->
+      </mat-card-actions>
+    </mat-card>
+
+</mat-grid-tile> 
+<br>
+</mat-grid-list>
+
+</div> 
+
+    
+
+<!-- previous codes-->
+    <!-- <div class="row">
+    <div class="col"> -->
+<!-- <section >
+        <header class="header">
+          <div class="row">
+            <div class="col-md-2">
+              <form name="empForm">
+                <table class="table table-striped">
+                  <tr>
+                    <th colspan="2" >Add Restaurant</th>
+                  </tr>
+                  <tr>
+                    <td>Id</td>
+                    <td>
+                      <input id="id" name="id">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td>
+                      <input id="name" name="name">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Location</td>
+                    <td>
+                      <input id="location" name="location">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Cuisine</td>
+                    <td>
+                      <input id="cuisine" name="cuisine">
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>Rating</td>
+                      <td>
+                        <input id="rating" name="rating">
+                      </td>
+                    </tr>
+                    <td colspan="2">
+                      <button mat-raised-button type="button" (click)="addRestaurant()" class="btn btn-primary">Submit</button>
+                    </td>
+                 
+                </table>
+              </form>
+            </div>
+          </div>
+        </header>
+      </section> -->
+
+<!-- <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let restaurants"> {{restaurants.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let restaurants"> {{restaurants.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+      <mat-cell *matCellDef="let restaurants"> {{restaurants.location}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="cuisine">
+      <mat-header-cell *matHeaderCellDef> Cuisine </mat-header-cell>
+      <mat-cell *matCellDef="let restaurants"> {{restaurants.cuisine}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
+      <mat-cell *matCellDef="let restaurants"> {{restaurants.rating}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
+        <button mat-raised-button class="btn btn-danger" (click)="deleteRestaurant(rest.id)">Delete</button>
+       
+      </ng-container>
+       <ng-container matColumnDef="update">
+          <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
+          
+            <button mat-raised-button class="btn btn-primary" (click)="updateRestaurant(rest)">Edit</button>
+         
+        </ng-container>  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table> -->
+
+  <!-- <section class="main">
+    <table  class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Cuisine</th>
+          <th>Rating</th>
+          <th>Operations</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rest of restaurants">
+          <th scope="row">{{rest.id}}</th>
+          <td>{{rest.name}}</td>
+          <td>{{rest.location}}</td>
+          <td>{{rest.cuisine}}</td>
+          <td>{{rest.rating}}</td>
+          <td>
+            <button mat-raised-button class="btn btn-danger" (click)="deleteRestaurant(rest.id)">Delete</button>
+            <button mat-raised-button class="btn btn-primary" (click)="updateRestaurant(rest)">Edit</button>
+            <button mat-raised-button class="btn btn-primary" (click)="addFavt(rest)">Add to Favourities</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section> 
+  
+       <br>
+       
+       <mat-tab-group>
+        <mat-tab label="Tab 1">
+        
+      </mat-tab>
+        
+      <mat-tab label="Tab 2">
+     
+</mat-tab>
+</mat-tab-group>
+
+   </div>
+  </div> -->
